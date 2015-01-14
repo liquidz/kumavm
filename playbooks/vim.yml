@@ -19,38 +19,30 @@
         - libncurses5-dev
         - libacl1-dev
         - libgpm-dev
-        - lua5.2
-        - liblua5.2-dev
-        - luajit
-        - libluajit-5.1-2
-    - shell: ln -s /usr/include/lua5.2 /usr/include/lua
+        - lua5.1
+        - liblua5.1-0-dev
+    - git: repo={{luajit_repo}}
+           dest={{src_dir}}/luajit
+           version=master
+           accept_hostkey=yes
+           update=no
+    - shell: make && make install
       args:
-        creates: "/usr/include/lua"
-    - shell: ln -s /usr/bin/luajit-2.0.0-beta9 /usr/bin/luajit
-      args:
-        creates: "/usr/bin/luajit"
-    #- name: install lua
-    #  apt: name=lua state=present
-    #- name: install lua-devel
-    #  apt: name=lua-devel state=present
-    ## luajit
-    #- git: repo={{luajit_repo}}
-    #       dest={{src_dir}}/luajit
-    #       version=master
-    #       accept_hostkey=yes
-    #       update=no
-    ## build luajit
-    #- shell: make && make install
+        chdir: "{{src_dir}}/luajit"
+        creates: "/usr/local/lib/libluajit-5.1.so"
+    #- shell: ln -s /usr/include/lua5.2 /usr/include/lua
     #  args:
-    #    chdir: "{{src_dir}}/luajit"
-    #    creates: "/usr/local/lib/libluajit-5.1.so"
+    #    creates: "/usr/include/lua"
+    #- shell: ln -s /usr/bin/luajit-2.0.0-beta9 /usr/bin/luajit
+    #  args:
+    #    creates: "/usr/bin/luajit"
     - hg: repo={{vim_repo}}
           dest={{src_dir}}/vim
     - shell: ./configure {{vim_configure}} && make && make install
       args:
         chdir: "{{src_dir}}/vim"
         creates: "/usr/local/bin/vim"
-    - copy: src=files/ld_lib_path.sh dest=/etc/profile.d/ld_lib_path.sh
-    # remove vim-mininal
-    - name: remove pre-installed vim
-      apt: name="vim-minimal" state=absent
+    #- copy: src=files/ld_lib_path.sh dest=/etc/profile.d/ld_lib_path.sh
+    ## remove vim-mininal
+    #- name: remove pre-installed vim
+    #  apt: name="vim-minimal" state=absent
