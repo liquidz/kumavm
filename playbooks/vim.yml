@@ -1,0 +1,56 @@
+---
+- hosts: 127.0.0.1
+  connection: local
+  sudo: yes
+  vars:
+    luajit_repo: "http://luajit.org/git/luajit-2.0.git"
+    vim_repo: "https://vim.googlecode.com/hg/"
+    vim_configure: "--prefix=/usr/local --with-features=huge --enable-multibyte --enable-luainterp --with-luajit --enable-fail-if-missing"
+    src_dir: "/usr/local/src"
+  tasks:
+    # http://vim-jp.org/docs/build_linux.html
+    # http://www.jonki.net/entry/2014/05/04/183250
+    - name: install packages
+      apt: name={{ item }} state=present
+      with_items:
+        - build-essential
+        - mercurial
+        - gettext
+        - libncurses5-dev
+        - libacl1-dev
+        - libgpm-dev
+        - lua5.2
+        - liblua5.2-dev
+        - luajit
+        - libluajit-5.1-2
+    - shell: ln -s /usr/include/lua5.2 /usr/include/lua
+      args:
+        creates: "/usr/include/lua"
+    - shell: ln -s /usr/bin/luajit-2.0.0-beta9 /usr/bin/luajit
+      args:
+        creates: "/usr/bin/luajit"
+    #- name: install lua
+    #  apt: name=lua state=present
+    #- name: install lua-devel
+    #  apt: name=lua-devel state=present
+    ## luajit
+    #- git: repo={{luajit_repo}}
+    #       dest={{src_dir}}/luajit
+    #       version=master
+    #       accept_hostkey=yes
+    #       update=no
+    ## build luajit
+    #- shell: make && make install
+    #  args:
+    #    chdir: "{{src_dir}}/luajit"
+    #    creates: "/usr/local/lib/libluajit-5.1.so"
+    - hg: repo={{vim_repo}}
+          dest={{src_dir}}/vim
+    - shell: ./configure {{vim_configure}} && make && make install
+      args:
+        chdir: "{{src_dir}}/vim"
+        creates: "/usr/local/bin/vim"
+    - copy: src=files/ld_lib_path.sh dest=/etc/profile.d/ld_lib_path.sh
+    # remove vim-mininal
+    - name: remove pre-installed vim
+      apt: name="vim-minimal" state=absent

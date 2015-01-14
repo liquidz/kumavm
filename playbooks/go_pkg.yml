@@ -1,0 +1,19 @@
+---
+- hosts: 127.0.0.1
+  connection: local
+  vars:
+    goenv:
+      GOROOT: "/usr/local/go"
+      GOPATH: "{{ lookup('env','HOME') }}"
+    ghq_root: "~/src"
+
+  tasks:
+    - name: go get packages
+      shell: "{{ goenv.GOROOT }}/bin/go get {{ item }}"
+      environment: goenv
+      with_items:
+        - github.com/nsf/gocode
+        - github.com/motemen/ghq
+        - github.com/peco/peco/cmd/peco
+    - name: ghq.root config
+      shell: git config --global ghq.root {{ghq_root}}
