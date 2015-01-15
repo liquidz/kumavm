@@ -13,3 +13,7 @@
 - include: playbooks/go.yml
 - include: playbooks/go_pkg.yml
 #- include: vim/latest.yml
+# TODO: docker
+# TODO: clojure
+# TODO: hub
+# TODO: open-ssl (keygen)
