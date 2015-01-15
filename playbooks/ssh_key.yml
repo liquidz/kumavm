@@ -8,5 +8,7 @@
       with_items:
         - root
         - vagrant
-          #cat ~/.ssh/id_rsa.pub > ~/.ssh/authorized_keys
-          #chmod 600 ~/.ssh/authorized_keys
+    - shell: cat id_rsa.pub > authorized_keys
+      args:
+        chdir: ~/.ssh
+    - file: name=~/.ssh/authorized_keys mode=0600

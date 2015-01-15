@@ -7,7 +7,7 @@
     prefix_dir: "/usr/local"
   tasks:
     - get_url: url={{hub_tar}} validate_certs=no dest={{prefix_dir}}/src/hub_2.2.0-rc1_linux_amd64.gz.tar
-    - shell: tar xvf hub.gz.tar
+    - shell: tar xvf hub_2.2.0-rc1_linux_amd64.gz.tar
       args:
         chdir: "{{prefix_dir}}/src"
         creates: "{{prefix_dir}}/src/hub_2.2.0-rc1_linux_amd64/hub"
