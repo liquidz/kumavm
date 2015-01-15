@@ -6,5 +6,6 @@ vagrant box add utopic64 https://cloud-images.ubuntu.com/vagrant/utopic/current/
 ```
 git clone https://github.com/liquidz/kumavm
 cd kumavm
+cp -pi Vagrantfile.sample Vagrantfile
 vagrant up
 ```
