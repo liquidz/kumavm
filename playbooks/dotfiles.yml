@@ -1,0 +1,7 @@
+---
+- hosts: 127.0.0.1
+  connection: local
+  tasks:
+    - shell: curl -L http://bit.ly/uochan_dotfile | env MODE=full bash
+      args:
+        creates: ~/src/github.com/liquidz/dotfiles

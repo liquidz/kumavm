@@ -1,0 +1,12 @@
+---
+- hosts: 127.0.0.1
+  connection: local
+  sudo: yes
+  tasks:
+    - name: install zsh
+      apt: name=zsh state=present
+    - name: change shell
+      user: name={{ item }} shell=/bin/zsh
+      with_items:
+        - root
+        - vagrant

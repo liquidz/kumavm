@@ -1,6 +1,6 @@
 #!/bin/sh
 
-sudo apt-get update
+#sudo apt-get update
 sudo apt-get install -y ansible
 
 cat <<EOT > /tmp/hosts
@@ -8,4 +8,4 @@ cat <<EOT > /tmp/hosts
 EOT
 sudo /bin/mv -f /tmp/hosts /etc/ansible/hosts
 
-ansible-playbook /vagrant/playbook.yml
+sudo -u vagrant -H ansible-playbook /vagrant/playbook.yml

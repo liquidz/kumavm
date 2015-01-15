@@ -1,0 +1,10 @@
+---
+- hosts: 127.0.0.1
+  connection: local
+  vars:
+    git:
+      name: uochan
+      email: liquidz.uo@gmail.com
+  tasks:
+    - shell: git config --global user.name {{ git.name }}
+    - shell: git config --global user.email {{ git.email }}

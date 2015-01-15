@@ -1,0 +1,18 @@
+---
+- hosts: 127.0.0.1
+  connection: local
+  sudo: yes
+  vars:
+    hub_tar: https://github.com/github/hub/releases/download/v2.2.0-rc1/hub_2.2.0-rc1_linux_amd64.gz.tar
+    prefix_dir: "/usr/local"
+  tasks:
+    - get_url: url={{hub_tar}} validate_certs=no dest={{prefix_dir}}/src/hub_2.2.0-rc1_linux_amd64.gz.tar
+    - shell: tar xvf hub.gz.tar
+      args:
+        chdir: "{{prefix_dir}}/src"
+        creates: "{{prefix_dir}}/src/hub_2.2.0-rc1_linux_amd64/hub"
+    - shell: /bin/cp -pf src/hub_2.2.0-rc1_linux_amd64/hub bin
+      args:
+        chdir: "{{prefix_dir}}"
+        creates: "{{prefix_dir}}/bin/hub"
+

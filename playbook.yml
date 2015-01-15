@@ -9,11 +9,13 @@
         - tmux
         - expect
         - git
-        - zsh
+- include: playbooks/git_config.yml
+- include: playbooks/ssh_key.yml
 - include: playbooks/go.yml
 - include: playbooks/go_pkg.yml
-#- include: vim/latest.yml
-# TODO: docker
-# TODO: clojure
-# TODO: hub
-# TODO: open-ssl (keygen)
+#- include: playbooks/docker.yml
+- include: playbooks/vim.yml
+- include: playbooks/hub.yml
+- include: playbooks/lein.yml
+- include: playbooks/zsh.yml
+- include: playbooks/dotfiles.yml
