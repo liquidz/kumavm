@@ -1,14 +1,11 @@
 ---
 - hosts: 127.0.0.1
   connection: local
-  sudo: yes
   tasks:
     - name: ssh key gen
-      user: name={{ item }} generate_ssh_key=yes
-      with_items:
-        - root
-        - vagrant
-    - shell: cat id_rsa.pub > authorized_keys
+      user: name=vagrant generate_ssh_key=yes
+    - shell: cp -pf authorized_keys authorized_keys.org && cat id_rsa.pub >> authorized_keys
       args:
         chdir: ~/.ssh
+        creates: ~/.ssh/authorized_keys.org
     - file: name=~/.ssh/authorized_keys mode=0600
