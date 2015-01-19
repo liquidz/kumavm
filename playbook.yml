@@ -17,5 +17,6 @@
 - include: playbooks/vim.yml
 - include: playbooks/hub.yml
 - include: playbooks/lein.yml
+- include: playbooks/gpg.yml
 - include: playbooks/zsh.yml
 - include: playbooks/dotfiles.yml
