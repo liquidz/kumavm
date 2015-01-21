@@ -1,7 +1,9 @@
 #!/bin/sh
 
 sudo apt-get update
-sudo apt-get install -y ansible
+if ! which ansible-playbook > /dev/null 2>&1; then
+    sudo apt-get install -y ansible
+fi
 
 cat <<EOT > /tmp/hosts
 127.0.0.1

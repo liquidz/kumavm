@@ -6,6 +6,11 @@
     - name: install packages
       apt: name={{ item }} state=present
       with_items:
+        - gsfonts
+        - gsfonts-x11
+        - fonts-dejavu-core
+        - ttf-bitstream-vera
+        - fonts-freefont-ttf
         - tmux
         - expect
         - git
